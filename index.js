@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const { getUser } = require("./DBConnect");
 
 const PORT = process.env.PORT || 3001;
 
@@ -9,14 +10,15 @@ app.use(express.static(path.resolve(__dirname, "../react-routing/build")));
 
 console.log(path.resolve(__dirname), "path");
 
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
-});
-
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+app.get("/api", async (req, res) => {
+  console.log("api requested");
+  const result = await getUser("arshan");
+  res.json({ message: result.username });
 });
 
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+});
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
 });
