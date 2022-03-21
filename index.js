@@ -12,8 +12,11 @@ console.log(path.resolve(__dirname), "path");
 
 app.get("/api", async (req, res) => {
   console.log("api requested");
-  const result = await getUser("arshan");
-  res.json({ message: result.username });
+
+  const result = getUser("arshan");
+  result.then((data) => {
+    res.json({ message: data.username });
+  });
 });
 
 app.get("*", (req, res) => {

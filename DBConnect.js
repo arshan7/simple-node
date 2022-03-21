@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
 
 const uri =
-  "mongodb+srv://arshan25:Arshan*123@cluster0.vhrj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+  "mongodb+srv://*123@cluster0.vhrj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 const db = "arshan";
 const collection = "users";
@@ -10,7 +10,8 @@ async function getUserByUserName(username) {
   const client = new MongoClient(uri);
   try {
     await client.connect();
-    return await getUserByQuery(client, { username });
+    const result = await getUserByQuery(client, { username });
+    return result;
   } catch (error) {
     console.error(error);
   } finally {
